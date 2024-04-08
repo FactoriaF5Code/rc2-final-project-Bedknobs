@@ -1,25 +1,23 @@
 package com.doggiediary.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.doggiediary.config.JwtProvider;
 import com.doggiediary.exception.UserException;
 import com.doggiediary.model.User;
 import com.doggiediary.reponse.AuthResponse;
 import com.doggiediary.repository.UserRepository;
 import com.doggiediary.service.CustomUserDetailsServiceImplementation;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @RestController
 @RequestMapping("/auth")
@@ -32,10 +30,7 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private JwtProvider jwtProvider;
-
-    @Autowired
-    private CustomUserDetailsServiceImplementation customeUserDetails;
+    private CustomUserDetailsServiceImplementation customUserDetailsService;
 
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) throws UserException {
@@ -54,20 +49,18 @@ public class AuthController {
         User createdUser = new User();
         createdUser.setEmail(email);
         createdUser.setFullName(fullName);
-        createdUser.setPassword(password);
+        createdUser.setPassword(passwordEncoder.encode(password));
         createdUser.setBirthDate(birthDate);
 
         User savedUser = userRepository.save(createdUser);
 
-        Authentication authentication = new UsernamePasswordAuthenticationToken(email, password);
+        UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null,
+                userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String token = jwtProvider.generateToken(authentication);
-
-        AuthResponse res = new AuthResponse(token, true);
-
-        return new ResponseEntity<AuthResponse>(res, HttpStatus.CREATED);
-
+        AuthResponse res = new AuthResponse("User registered successfully", true);
+        return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
 
     @PostMapping("/signin")
@@ -77,16 +70,13 @@ public class AuthController {
 
         Authentication authentication = authenticate(username, password);
 
-        String token = jwtProvider.generateToken(authentication);
-
-        AuthResponse res = new AuthResponse(token, true);
-
-        return new ResponseEntity<AuthResponse>(res, HttpStatus.ACCEPTED);
+        AuthResponse res = new AuthResponse("User signed in successfully", true);
+        return new ResponseEntity<>(res, HttpStatus.ACCEPTED);
     }
 
     private Authentication authenticate(String username, String password) {
 
-        UserDetails userDetails = customeUserDetails.loadUserByUsername(username);
+        UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
 
         if (userDetails == null) {
             throw new BadCredentialsException("Invalid username...");
@@ -97,5 +87,4 @@ public class AuthController {
 
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
-
 }
