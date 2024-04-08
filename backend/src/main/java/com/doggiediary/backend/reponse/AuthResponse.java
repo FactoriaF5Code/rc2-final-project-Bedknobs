@@ -1,4 +1,4 @@
-package com.doggiediary.reponse;
+package com.doggiediary.backend.reponse;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

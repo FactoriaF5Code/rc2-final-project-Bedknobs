@@ -1,4 +1,4 @@
-package com.doggiediary.exception;
+package com.doggiediary.backend.exception;
 
 public class UserException extends Exception {
 

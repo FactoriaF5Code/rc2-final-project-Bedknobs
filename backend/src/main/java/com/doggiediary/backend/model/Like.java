@@ -1,4 +1,4 @@
-package com.doggiediary.model;
+package com.doggiediary.backend.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

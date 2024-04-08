@@ -1,4 +1,4 @@
-package com.doggiediary.service;
+package com.doggiediary.backend.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.doggiediary.model.User;
-import com.doggiediary.repository.UserRepository;
+import com.doggiediary.backend.repository.UserRepository;
+import com.doggiediary.backend.model.User;
 
 @Service
 public class CustomUserDetailsServiceImplementation implements UserDetailsService {

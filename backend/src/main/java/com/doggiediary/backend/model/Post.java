@@ -1,4 +1,4 @@
-package com.doggiediary.model;
+package com.doggiediary.backend.model;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;

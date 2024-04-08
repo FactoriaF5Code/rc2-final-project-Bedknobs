@@ -1,11 +1,12 @@
-package com.doggiediary.repository;
+package com.doggiediary.backend.repository;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.doggiediary.model.User;
+import com.doggiediary.backend.model.User;
+
 
 public interface UserRepository extends JpaRepository<User, Long> {
 

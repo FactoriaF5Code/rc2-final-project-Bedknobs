@@ -1,4 +1,4 @@
-package com.doggiediary.controller;
+package com.doggiediary.backend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,11 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.doggiediary.exception.UserException;
-import com.doggiediary.model.User;
-import com.doggiediary.reponse.AuthResponse;
-import com.doggiediary.repository.UserRepository;
-import com.doggiediary.service.CustomUserDetailsServiceImplementation;
+
+import com.doggiediary.backend.repository.UserRepository;
+import com.doggiediary.backend.service.CustomUserDetailsServiceImplementation;
+import com.doggiediary.backend.exception.UserException;
+import com.doggiediary.backend.model.User;
+import com.doggiediary.backend.reponse.AuthResponse;
 
 @RestController
 @RequestMapping("/auth")

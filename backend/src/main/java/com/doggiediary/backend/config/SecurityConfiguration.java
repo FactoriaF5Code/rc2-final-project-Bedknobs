@@ -1,4 +1,4 @@
-package com.doggiediary.config;
+package com.doggiediary.backend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.doggiediary.service.CustomUserDetailsServiceImplementation;
+import com.doggiediary.backend.service.CustomUserDetailsServiceImplementation;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
