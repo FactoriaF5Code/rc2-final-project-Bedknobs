@@ -3,14 +3,15 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  min-height: 100vh;
+  height: 100vh;
   box-shadow: 4px 2px 12px 1px #c0c0c0;
   position: fixed;
   width: 16.5vw;
+  background-color: white;
 }
 
 .logoImg {
-  width: 15vw;
+  max-width: 13vw;
 }
 
 .optionsNavigation {
@@ -56,7 +57,8 @@
 .sidebarBtn Button {
   background-color: var(--light-blue);
   font-weight: 600;
-  padding: 0.6vw 3.3vw;
+  width: 10.7vw;
+  height: 2.7vw;
   border-radius: 8px;
   font-size: 1rem;
   font-family: Poppins;

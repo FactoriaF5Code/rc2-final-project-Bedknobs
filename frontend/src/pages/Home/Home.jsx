@@ -7,20 +7,18 @@ import PostDetail from "../../components/PostDetail/PostDetail";
 
 function Home() {
   return (
-    <div className="bgHome">
-      <Grid container item xs={12} className=" justify-between">
-        <Grid item xs={0} lg={2} className="hidden lg:block w-full relative">
-          <Sidebar />
-        </Grid>
+    <div className="bgHome relative">
+      <Grid container item className="justify-between">
+        <Sidebar />
 
-        <Grid item xs={12} lg={10} className="hidden lg:block w-full relative">
+        <div className="rightPartHome">
           <Routes>
             <Route path="/" element={<Entries />} />
             <Route path="/home" element={<Entries />} />
             <Route path="/account/:id" element={<Profile />} />
             <Route path="/post/:id" element={<PostDetail />} />
           </Routes>
-        </Grid>
+        </div>
       </Grid>
     </div>
   );
