@@ -18,7 +18,7 @@ public class Like {
     private Long id;
 
     @ManyToOne
-    private User user;
+    private UserDoggie user;
 
     @ManyToOne
     private Post post;

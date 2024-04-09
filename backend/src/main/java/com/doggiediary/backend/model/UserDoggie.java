@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Data
-public class User {
+public class UserDoggie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,10 +42,10 @@ public class User {
 
     @JsonIgnore
     @ManyToMany
-    private List<User> followers = new ArrayList<>();
+    private List<UserDoggie> followers = new ArrayList<>();
 
     @JsonIgnore
     @ManyToMany
-    private List<User> followings = new ArrayList<>();
+    private List<UserDoggie> followings = new ArrayList<>();
 
 }

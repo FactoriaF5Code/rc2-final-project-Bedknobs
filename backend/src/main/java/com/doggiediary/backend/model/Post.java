@@ -21,7 +21,7 @@ public class Post {
     private Long Id;
 
     @ManyToOne
-    private User user;
+    private UserDoggie user;
 
     private String content;
     private String image;
@@ -34,7 +34,7 @@ public class Post {
     private List<Post> replyPosts = new ArrayList<>();
 
     @ManyToMany
-    private List<User> repostUser = new ArrayList<>();
+    private List<UserDoggie> repostUser = new ArrayList<>();
 
     @ManyToOne
     private Post replyFor;

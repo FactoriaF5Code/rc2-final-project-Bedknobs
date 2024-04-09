@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.doggiediary.backend.repository.UserRepository;
-import com.doggiediary.backend.model.User;
+import com.doggiediary.backend.model.UserDoggie;
 
 @Service
 public class CustomUserDetailsServiceImplementation implements UserDetailsService {
@@ -22,7 +22,7 @@ public class CustomUserDetailsServiceImplementation implements UserDetailsServic
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        User user = userRepository.findByEmail(username);
+        UserDoggie user = userRepository.findByEmail(username);
 
         if(user == null || user.isLogin_with_google()){
             throw new UsernameNotFoundException("username not found with email" + username);
