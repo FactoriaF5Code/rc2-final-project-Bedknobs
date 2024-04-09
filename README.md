@@ -20,7 +20,7 @@ cd backend
 mvn spring-boot:run
 ```
 
-Necesitas una base de datos postgres para poder lanzar el backend (ver `src/main/resources/application.properties)`). 
+Necesitas una base de datos postgres llamada `doggiediary` para poder lanzar el backend (ver `src/main/resources/application.properties)`). 
 
 
 ### Organización del proyecto
