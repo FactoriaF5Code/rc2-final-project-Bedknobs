@@ -15,11 +15,11 @@ import io.jsonwebtoken.security.Keys;
 public class JwtProvider {
     SecretKey key = Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
 
-    public String generateToken(Authentication auth) {
+    public String generateToken(String email) {
         String jwt = Jwts.builder()
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(new Date().getTime() + 86400000))
-                .claim("email", auth.getName())
+                .claim("email", email)
                 .signWith(key)
                 .compact();
         return jwt;

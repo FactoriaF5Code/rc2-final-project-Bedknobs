@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-    
 
     @Autowired
     private UserRepository userRepository;
@@ -37,49 +36,40 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> createUserHandler(@RequestBody UserDoggie user) throws UserException {
-
+        // Validar si el usuario ya existe
         String email = user.getEmail();
-        String password = user.getPassword();
-        String fullName = user.getFullName();
-        String birthDate = user.getBirthDate();
-
         UserDoggie isEmailExist = userRepository.findByEmail(email);
-
         if (isEmailExist != null) {
             throw new UserException("Email is already used with another account");
         }
 
-        UserDoggie createdUser = new UserDoggie();
-        createdUser.setEmail(email);
-        createdUser.setFullName(fullName);
-        createdUser.setPassword(password);
-        createdUser.setBirthDate(birthDate);
+        // Codificar la contraseña con BCrypt
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
 
-        UserDoggie savedUser = userRepository.save(createdUser);
+        // Guardar el usuario en la base de datos
+        UserDoggie savedUser = userRepository.save(user);
 
-        Authentication authentication = new UsernamePasswordAuthenticationToken(email, password);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        String token = jwtProvider.generateToken(authentication);
-
+        // Crear y enviar el token JWT
+        String token = jwtProvider.generateToken(email);
         AuthResponse res = new AuthResponse(token, true);
-
-        return new ResponseEntity<AuthResponse>(res, HttpStatus.CREATED);
-
+        return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
 
     @PostMapping("/signin")
     public ResponseEntity<AuthResponse> signin(@RequestBody UserDoggie user) {
-        String username = user.getEmail();
-        String password = user.getPassword();
-
-        Authentication authentication = authenticate(username, password);
-
-        String token = jwtProvider.generateToken(authentication);
-
+        // Verificar la autenticación y generar el token JWT
+        String email = user.getEmail();
+        UserDoggie foundUser = userRepository.findByEmail(email);
+        if (foundUser == null) {
+            throw new BadCredentialsException("Invalid username or password");
+        }
+        if (!passwordEncoder.matches(user.getPassword(), foundUser.getPassword())) {
+            throw new BadCredentialsException("Invalid username or password");
+        }
+        String token = jwtProvider.generateToken(email);
         AuthResponse res = new AuthResponse(token, true);
-
-        return new ResponseEntity<AuthResponse>(res, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(res, HttpStatus.ACCEPTED);
     }
 
     private Authentication authenticate(String username, String password) {
