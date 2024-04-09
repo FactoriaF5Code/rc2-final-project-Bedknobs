@@ -36,21 +36,19 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> createUserHandler(@RequestBody UserDoggie user) throws UserException {
-        // Validar si el usuario ya existe
         String email = user.getEmail();
         UserDoggie isEmailExist = userRepository.findByEmail(email);
         if (isEmailExist != null) {
             throw new UserException("Email is already used with another account");
         }
 
-        // Codificar la contraseña con BCrypt
+        user.setFullName(user.getFirstName() + " " + user.getLastName());
+
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-
-        // Guardar el usuario en la base de datos
+        
         UserDoggie savedUser = userRepository.save(user);
 
-        // Crear y enviar el token JWT
         String token = jwtProvider.generateToken(email);
         AuthResponse res = new AuthResponse(token, true);
         return new ResponseEntity<>(res, HttpStatus.CREATED);

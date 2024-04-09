@@ -22,6 +22,8 @@ public class UserDoggie {
     private Long Id;
 
     private String fullName;
+    private String firstName;
+    private String lastName;
     private String location;
     private String birthDate;
     private String email;
