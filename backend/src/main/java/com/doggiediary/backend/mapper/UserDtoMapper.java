@@ -25,7 +25,7 @@ public class UserDtoMapper {
         return userDto;
     }
 
-    private static List<UserDto> toUserDtos(List<UserDoggie> followers) {
+    public static List<UserDto> toUserDtos(List<UserDoggie> followers) {
 
         List<UserDto> userDtos = new ArrayList<>();
 
