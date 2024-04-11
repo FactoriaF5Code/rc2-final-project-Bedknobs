@@ -1,0 +1,73 @@
+.leftPartAuth {
+  width: 65vw;
+  height: 100vh;
+  background-image: url("../../../src/images/loginPhoto.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position-y: -18vw;
+}
+
+.rightPartAuth {
+  background-color: var(--pearl);
+}
+
+.rightPartAuth,
+.rightPartAuth section {
+  width: 35vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.rightPartAuth h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 2vh;
+}
+
+.rightPartAuth h2 {
+  font-size: 2rem;
+}
+
+.rightPartAuth h2,
+.loginAuth h3 {
+  font-weight: 600;
+}
+
+.rightPartAuth section {
+  gap: 2.5vh;
+}
+
+.registerAuth,
+.rightPartAuth h2 {
+  margin-bottom: 8vh;
+}
+
+.registerAuth p {
+  font-size: 1.2rem;
+}
+
+.registerAuth Button,
+.registerAuth Button:hover {
+  background-color: var(--light-green);
+}
+
+.loginAuth Button,
+.loginAuth Button:hover {
+  background-color: var(--light-blue);
+}
+
+.registerAuth Button,
+.loginAuth Button {
+  width: 22rem;
+  height: 2.7rem;
+  border-radius: 8px;
+  font-family: "Poppins";
+  font-size: 1rem;
+}
+
+.loginAuth h3 {
+  font-size: 1.5rem;
+  margin-bottom: 5vh;
+}
