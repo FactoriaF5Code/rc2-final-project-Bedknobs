@@ -1,0 +1,69 @@
+.authModalContainer {
+  background-color: var(--pearl);
+}
+
+.signFormContainer,
+.birthDate,
+.authModalContainer {
+  display: flex !important;
+}
+
+.signFormContainer,
+.authModalContainer {
+  flex-direction: column !important;
+  align-items: center;
+  gap: 1.5vh;
+}
+
+.titleAuthModal {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 2vh;
+}
+
+.signAuthInput,
+.registerAuthModal Button,
+.signinButtonText Button,
+.loginAuthModal Button,
+.signupButtonText Button {
+  width: 25rem;
+}
+
+.signAuthSelect {
+  width: 8rem;
+}
+
+.birthDate {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.registerAuthModal Button,
+.registerAuthModal Button:hover,
+.signinButtonText Button,
+.signinButtonText Button:hover,
+.loginAuthModal Button,
+.loginAuthModal Button:hover,
+.signupButtonText Button,
+.signupButtonText Button:hover {
+  height: 2.7rem;
+  border-radius: 8px;
+  font-family: "Poppins";
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 2vh auto;
+}
+
+.registerAuthModal Button,
+.registerAuthModal Button:hover,
+.signinButtonText Button,
+.signinButtonText Button:hover {
+  background-color: var(--light-green);
+}
+
+.loginAuthModal Button,
+.loginAuthModal Button:hover,
+.signupButtonText Button,
+.signupButtonText Button:hover {
+  background-color: var(--light-blue);
+}

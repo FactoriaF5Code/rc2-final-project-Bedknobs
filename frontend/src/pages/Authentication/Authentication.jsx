@@ -2,28 +2,33 @@ import Grid from "@mui/material/Grid";
 import { GoogleLogin } from "@react-oauth/google";
 import Button from "@mui/material/Button";
 import "./Authentication.css";
+import AuthModal from "../../components/AuthModal/AuthModal";
+import { useState } from "react";
 
 function Authentication() {
+  const [openAuthModel, setOpenAuthModel] = useState(false);
+  const handleOpenAuthModel = () => setOpenAuthModel(true);
+  const handleCloseAuthModel = () => setOpenAuthModel(false);
+
   return (
     <div>
       <Grid className="overflow-y-hidden" container>
-        <div className="leftPartAuth">
-          
-        </div>
+        <div className="leftPartAuth"></div>
         <div className="rightPartAuth">
           <h1>¿QUÉ ESTÁ PASANDO?</h1>
           <h2>ENTRA EN DOGGIEDIARY HOY</h2>
           <section className="registerAuth">
-            <GoogleLogin width={350}/>
+            <GoogleLogin width={350} />
             <p>O</p>
-            <Button>CREAR UNA CUENTA</Button>
+            <Button onClick={handleOpenAuthModel}>CREAR UNA CUENTA</Button>
           </section>
           <section className="loginAuth">
             <h3>¿YA TIENES UNA CUENTA?</h3>
-            <Button>INICIAR SESIÓN</Button>
+            <Button onClick={handleOpenAuthModel}>INICIAR SESIÓN</Button>
           </section>
         </div>
       </Grid>
+      <AuthModal open={openAuthModel} handleClose={handleCloseAuthModel} />
     </div>
   );
 }
