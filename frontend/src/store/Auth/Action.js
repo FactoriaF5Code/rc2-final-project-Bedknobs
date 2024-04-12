@@ -7,7 +7,7 @@ import {
   LOGIN_USER_SUCCESS,
   REGISTER_USER_FAILURE,
   REGISTER_USER_SUCCESS,
-} from "./ActionType";
+} from "./actionType";
 
 export const loginUser = (loginData) => async (dispatch) => {
   try {

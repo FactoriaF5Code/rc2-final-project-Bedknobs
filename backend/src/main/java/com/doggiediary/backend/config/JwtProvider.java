@@ -11,10 +11,12 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
+@SuppressWarnings("unused")
 @Service
 public class JwtProvider {
     SecretKey key = Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
 
+    @SuppressWarnings("deprecation")
     public String generateToken(String email) {
         String jwt = Jwts.builder()
                 .setIssuedAt(new Date())
@@ -25,6 +27,7 @@ public class JwtProvider {
         return jwt;
     }
 
+    @SuppressWarnings("deprecation")
     public String getEmailFromToken(String jwt) {
         jwt = jwt.substring(7);
         Claims claims = Jwts.parser().setSigningKey(key).build().parseClaimsJws(jwt).getBody();

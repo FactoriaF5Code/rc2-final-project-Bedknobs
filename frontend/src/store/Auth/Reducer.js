@@ -8,7 +8,7 @@ import {
   REGISTER_USER_FAILURE,
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
-} from "./ActionType";
+} from "./actionType";
 
 const initialState = {
   user: null,
