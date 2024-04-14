@@ -76,9 +76,9 @@ function Post() {
               onClick={() => navigate(`/post/${2}`)}
               className="postInfo"
             >
-              <p>Maravillosa vista</p>
+              <p>Día de playa</p>
               <img
-                src="https://cdn.pixabay.com/photo/2023/05/22/06/41/beach-8009994_960_720.jpg"
+                src="../../../src/images/Nala.jpg"
                 alt="nice view"
               />
             </section>

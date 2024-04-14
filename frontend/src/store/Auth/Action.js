@@ -12,7 +12,7 @@ import {
 export const loginUser = (loginData) => async (dispatch) => {
   try {
     const { data } = await axios.post(`${API_BASE_URL}/auth/signin`, loginData);
-
+    console.log("User logueado ", data);
     if (data.jwt) {
       localStorage.setItem("jwt", data.jwt);
     }
@@ -29,7 +29,7 @@ export const registerUser = (registerData) => async (dispatch) => {
       `${API_BASE_URL}/auth/signup`,
       registerData
     );
-
+    console.log("User registrado ", data);
     if (data.jwt) {
       localStorage.setItem("jwt", data.jwt);
     }

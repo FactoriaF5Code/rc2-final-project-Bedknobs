@@ -3,6 +3,8 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useDispatch } from 'react-redux';
+import { loginUser } from "../../store/Auth/action";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -11,6 +13,7 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required("Tienes que poner una contraseña"),
 });
 function SigninForm() {
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -18,6 +21,7 @@ function SigninForm() {
     },
     validationSchema,
     onSubmit: (values) => {
+      dispatch(loginUser(values))
       console.log("form value ", values);
     },
   });
