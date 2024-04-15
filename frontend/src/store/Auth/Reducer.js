@@ -8,6 +8,7 @@ import {
   REGISTER_USER_FAILURE,
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
+  LOGOUT,
 } from "./actionType";
 
 const initialState = {
@@ -28,6 +29,8 @@ export const authReducer = (state = initialState, action) => {
       return { ...state, loading: false, error: null, jwt: action.payload };
     case GET_USER_PROFILE_SUCCESS:
       return { ...state, loading: false, error: null, user: action.payload };
+    case LOGOUT:
+      return initialState;
     case LOGIN_USER_FAILURE:
     case REGISTER_USER_FAILURE:
     case GET_USER_PROFILE_FAILURE:

@@ -34,24 +34,24 @@ public class AuthController {
     private CustomUserDetailsServiceImplementation customeUserDetails;
 
     @PostMapping("/signup")
-    public ResponseEntity<AuthResponse> createUserHandler(@RequestBody UserDoggie user) throws UserException {
-        String email = user.getEmail();
-        UserDoggie isEmailExist = userRepository.findByEmail(email);
-        if (isEmailExist != null) {
-            throw new UserException("Email is already used with another account");
-        }
-
-        user.setFullName(user.getFirstName() + " " + user.getLastName());
-
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
-        
-        UserDoggie savedUser = userRepository.save(user);
-
-        String token = jwtProvider.generateToken(email);
-        AuthResponse res = new AuthResponse(token, true);
-        return new ResponseEntity<>(res, HttpStatus.CREATED);
+public ResponseEntity<AuthResponse> createUserHandler(@RequestBody UserDoggie user) throws UserException {
+    String email = user.getEmail();
+    UserDoggie isEmailExist = userRepository.findByEmail(email);
+    if (isEmailExist != null) {
+        throw new UserException("Email is already used with another account");
     }
+
+    user.setFullName(user.getFullName()); // Use the fullName field directly
+
+    String encodedPassword = passwordEncoder.encode(user.getPassword());
+    user.setPassword(encodedPassword);
+
+    UserDoggie savedUser = userRepository.save(user);
+
+    String token = jwtProvider.generateToken(email);
+    AuthResponse res = new AuthResponse(token, true);
+    return new ResponseEntity<>(res, HttpStatus.CREATED);
+}
 
     @PostMapping("/signin")
     public ResponseEntity<AuthResponse> signin(@RequestBody UserDoggie user) {

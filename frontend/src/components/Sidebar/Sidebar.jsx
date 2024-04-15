@@ -9,6 +9,8 @@ import Avatar from "@mui/material/Avatar";
 import SearchIcon from "@mui/icons-material/Search";
 import NavigationItem from "./NavigationItem";
 import ProfileMenu from "./ProfileMenu";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../store/Auth/action";
 
 function Sidebar() {
   const navigation = [
@@ -30,6 +32,8 @@ function Sidebar() {
   ];
 
   const [anchorEl, setAnchorEl] = useState(null);
+  const { auth } = useSelector((store) => store);
+  const dispatch = useDispatch();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -37,10 +41,11 @@ function Sidebar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  // eslint-disable-next-line no-unused-vars
+
   const handleLogout = () => {
     console.log("Logout");
     handleClose();
+    dispatch(logout());
   };
 
   return (
@@ -70,8 +75,10 @@ function Sidebar() {
           src="https://cdn.pixabay.com/photo/2023/09/22/17/59/dog-8269584_640.jpg"
         />
         <div className="profileInfoSidebar">
-          <span>Rosie Queen</span>
-          <span className="opacity-50">@Queenie</span>
+          <span>{auth.user?.fullName}</span>
+          <span className="opacity-50">
+            @{auth.user?.fullName.split(" ").join("_").toLowerCase()}
+          </span>
         </div>
         <Button
           id="basic-button"
@@ -86,7 +93,7 @@ function Sidebar() {
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
-          onClick={handleClose}
+          onClick={handleLogout}
           message="Cerrar Sesión"
         />
       </section>

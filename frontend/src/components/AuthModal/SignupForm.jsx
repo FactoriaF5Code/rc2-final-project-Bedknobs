@@ -4,6 +4,8 @@ import TextField from "@mui/material/TextField";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import "./SignForm.css";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../../store/Auth/action";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -31,6 +33,7 @@ const months = [
 ];
 
 function SignupForm() {
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       fullName: "",
@@ -47,6 +50,7 @@ function SignupForm() {
       const { day, month, year } = values.dateOfBirth;
       const dateOfBirth = `${day}-${month}-${year}`;
       values.dateOfBirth = dateOfBirth;
+      dispatch(registerUser(values));
       console.log("form value ", values);
     },
   });
