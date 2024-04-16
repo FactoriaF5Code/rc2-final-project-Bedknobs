@@ -70,7 +70,7 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<UserDto> searchUser(@RequestBody UserDoggie req,
+    public ResponseEntity<UserDto> updateUser(@RequestBody UserDoggie req,
             @RequestHeader("Authorization") String jwt)
             throws UserException {
 

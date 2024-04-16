@@ -15,7 +15,7 @@ function Entries() {
   const [uploadingImage, setUploadingImage] = useState();
   const [selectedImage, setSelectedImage] = useState("");
   const dispatch = useDispatch();
-  const { post } = useSelector((store) => store);
+  const { post, auth } = useSelector((store) => store);
   console.log("post ", post);
 
   const validationSchema = Yup.object().shape({
@@ -54,10 +54,7 @@ function Entries() {
     <main className="bodyContainer">
       <div className="entriesContainer">
         <section className="newEntrieContainer">
-          <Avatar
-            alt="username"
-            src="https://cdn.pixabay.com/photo/2023/09/22/17/59/dog-8269584_640.jpg"
-          />
+          <Avatar alt="username" src={auth.user?.image} />
           <div>
             <form onSubmit={formik.handleSubmit}>
               <div>

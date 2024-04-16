@@ -8,10 +8,13 @@ import "./Profile.css";
 import { useState } from "react";
 import Post from "../../components/Post/Post";
 import ProfileModal from "../../components/ProfileModal/ProfileModal";
+import { useSelector } from "react-redux";
 
 function Profile() {
   const [tabValue, setTabValue] = useState("1");
   const [openProfileModal, setOpenProfileModal] = useState(false);
+  const { auth } = useSelector((store) => store);
+
   const handleOpenProfileModel = () => setOpenProfileModal(true);
   const handleClose = () => setOpenProfileModal(false);
   const handleFollowUser = () => {
@@ -36,17 +39,16 @@ function Profile() {
             alt="Fondo"
           />
           <div className="profileAvatar">
-            <Avatar
-              alt="Queniee"
-              src="https://cdn.pixabay.com/photo/2023/09/22/17/59/dog-8269584_640.jpg"
-            />
+            <Avatar alt="Queniee" src={auth.user?.image} />
           </div>
         </section>
         <section>
           <div className="profileInfo">
             <div className="profileUser">
-              <h2>Rosie Queen</h2>
-              <p className="opacity-50">@Quennie</p>
+              <h2>{auth.user?.fullName}</h2>
+              <p className="opacity-50">
+                @{auth.user?.fullName.split(" ").join("_").toLowerCase()}
+              </p>
               <div className="followersAndFollows">
                 <p>
                   190 <span className="opacity-50">Seguidores</span>
@@ -55,6 +57,7 @@ function Profile() {
                   590<span className="opacity-50"> Seguidos</span>
                 </p>
               </div>
+              <p>{auth.user?.bio}</p>
             </div>
             <div className="entrieBtn">
               {true ? (
@@ -83,16 +86,15 @@ function Profile() {
                 </TabList>
               </Box>
               <TabPanel value="1">
-                {[1, 2, 3, 4, 5].map((index) => (
-                  <div key={index}>
-                    <Post />
-                    {index !== [1, 2, 3, 4, 5].length - 1 && (
+                {Array.isArray(auth.posts) &&
+                  auth.posts.map((post, index) => (
+                    <div key={index}>
+                      <Post post={post} />
                       <div className="divider">
                         <Divider />
                       </div>
-                    )}
-                  </div>
-                ))}
+                    </div>
+                  ))}
               </TabPanel>
               <TabPanel value="2">Comentarios</TabPanel>
               <TabPanel value="3">Media</TabPanel>

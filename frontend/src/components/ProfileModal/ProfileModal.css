@@ -30,14 +30,15 @@
   object-fit: cover;
 }
 
-.modalProfileImg .css-1wlk0hk-MuiAvatar-root {
-  height: 4.5vw;
-  width: 4.5vw;
-  object-fit: cover;
-  border-radius: 8px;
-  position: absolute;
-  top: 5vw;
-  left: 1.5vw;
+.modalProfileImg .css-1wlk0hk-MuiAvatar-root,
+.css-17o22dy-MuiAvatar-root {
+  height: 4.5vw !important;
+  width: 4.5vw !important;
+  object-fit: cover !important;
+  border-radius: 8px !important;
+  position: absolute !important;
+  top: 4.7vw !important;
+  left: 1.3vw !important;
 }
 
 .nameModal label,

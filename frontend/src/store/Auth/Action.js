@@ -25,7 +25,7 @@ export const loginUser = (loginData) => async (dispatch) => {
     }
     dispatch({ type: LOGIN_USER_SUCCESS, payload: data.jwt });
   } catch (error) {
-    console.log("error", error);
+    console.log("error loginUser", error);
     dispatch({ type: LOGIN_USER_FAILURE, payload: error.message });
   }
 };
@@ -42,7 +42,7 @@ export const registerUser = (registerData) => async (dispatch) => {
     }
     dispatch({ type: REGISTER_USER_SUCCESS, payload: data.jwt });
   } catch (error) {
-    console.log("error", error);
+    console.log("error registeUser", error);
     dispatch({ type: REGISTER_USER_FAILURE, payload: error.message });
   }
 };
@@ -56,7 +56,7 @@ export const getUserProfile = (jwt) => async (dispatch) => {
     });
     dispatch({ type: GET_USER_PROFILE_SUCCESS, payload: data });
   } catch (error) {
-    console.log("error", error);
+    console.log("error getUserProfile", error);
     dispatch({ type: GET_USER_PROFILE_FAILURE, payload: error.message });
   }
 };
@@ -66,18 +66,18 @@ export const findUserById = (userId) => async (dispatch) => {
     const { data } = await api.get(`/api/users/${userId}`);
     dispatch({ type: FIND_USER_BY_ID_SUCCESS, payload: data });
   } catch (error) {
-    console.log("error", error);
+    console.log("error findUserById", error);
     dispatch({ type: FIND_USER_BY_ID_FAILURE, payload: error.message });
   }
 };
 
 export const updateUserProfile = (reqData) => async (dispatch) => {
   try {
-    const { data } = await api.put(`/api/users/update/`, reqData);
+    const { data } = await api.put(`/api/users/update`, reqData);
     console.log("updated user: ", data);
     dispatch({ type: UPDATE_USER_SUCCESS, payload: data });
   } catch (error) {
-    console.log("error", error);
+    console.log("error updateUserProfile", error);
     dispatch({ type: UPDATE_USER_FAILURE, payload: error.message });
   }
 };
@@ -88,7 +88,7 @@ export const followUserAction = (userId) => async (dispatch) => {
     console.log("followed user: ", data);
     dispatch({ type: FOLLOW_USER_SUCCESS, payload: data });
   } catch (error) {
-    console.log("error", error);
+    console.log("error followeUserAction", error);
     dispatch({ type: FOLLOW_USER_FAILURE, payload: error.message });
   }
 };

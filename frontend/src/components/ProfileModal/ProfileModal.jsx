@@ -7,6 +7,9 @@ import { Avatar, IconButton, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import "./ProfileModal.css";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUserProfile } from "../../store/Auth/action";
+import { uploadToCloudinary } from "../../utils/uploadToCloudinary";
 
 const style = {
   position: "absolute",
@@ -24,19 +27,24 @@ const style = {
   borderRadius: 3,
 };
 
-function ProfileModal({handleOpen, handleClose}) {
+function ProfileModal({ handleOpen, handleClose }) {
   const [uploading, setUploading] = useState(false);
-  
+  const dispatch = useDispatch();
+  const [setSelectedImage, setImage] = useState("");
+    const { auth } = useSelector((store) => store);
 
   const handleSubmit = (values) => {
+    dispatch(updateUserProfile(values));
     console.log("handle submit", values);
+    setSelectedImage("");
   };
 
-  const handleImageChange = (event) => {
+  const handleImageChange = async (event) => {
     setUploading(true);
     const { name } = event.target;
-    const file = event.target.files[0];
+    const file = await uploadToCloudinary(event.target.files[0]);
     formik.setFieldValue(name, file);
+    setImage(file);
     setUploading(false);
   };
 
@@ -49,6 +57,9 @@ function ProfileModal({handleOpen, handleClose}) {
     },
     onSubmit: handleSubmit,
   });
+
+  console.log("auth :", auth);
+
   return (
     <div>
       <Modal
@@ -85,7 +96,13 @@ function ProfileModal({handleOpen, handleClose}) {
                     />
                   </div>
                   <div className="modalProfileImg">
-                    <Avatar src="https://cdn.pixabay.com/photo/2023/09/22/17/59/dog-8269584_640.jpg" />
+                    <Avatar
+                      src={
+                        setSelectedImage ||
+                        auth.user?.image ||
+                        "https://pixabay.com/es/photos/bulldog-franc%C3%A9s-perro-blanco-y-negro-5219522/"
+                      }
+                    />
                     <input
                       type="file"
                       className="absolute top-[5vw] left-[1.5vw] w-[4.5vw] h-[4.5vw] opacity-0 cursor-pointer"

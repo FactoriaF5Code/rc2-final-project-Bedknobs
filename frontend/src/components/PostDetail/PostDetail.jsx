@@ -29,7 +29,7 @@ function PostDetail() {
               className="cursor-pointer"
               onClick={handleBack}
             />
-            <h2>Entrada</h2>
+            <h2>Inicio</h2>
           </section>
           <section>
             <Post post={post.post} />

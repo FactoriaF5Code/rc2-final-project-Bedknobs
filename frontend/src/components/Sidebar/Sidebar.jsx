@@ -72,7 +72,7 @@ function Sidebar() {
       <section className="profileInfoContainer">
         <Avatar
           alt="Avatar"
-          src="https://cdn.pixabay.com/photo/2023/09/22/17/59/dog-8269584_640.jpg"
+          src={auth.user?.image}
         />
         <div className="profileInfoSidebar">
           <span>{auth.user?.fullName}</span>
