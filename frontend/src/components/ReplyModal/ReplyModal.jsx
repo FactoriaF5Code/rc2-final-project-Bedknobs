@@ -9,6 +9,9 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import { useFormik } from "formik";
 import "./ReplyModal.css";
+import { useDispatch } from "react-redux";
+import { createPostReply } from "../../store/Post/Action";
+import { uploadToCloudinary } from "../../utils/uploadToCloudinary";
 
 const style = {
   position: "absolute",
@@ -23,24 +26,30 @@ const style = {
   outline: "none",
 };
 
-function ReplyModal({handleClose, open}) {
+function ReplyModal({ handleClose, open, post }) {
   const [uploadingImage, setUploadingImage] = useState();
   const [selectedImage, setSelectedImage] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const handleSubmit = (values) => {
+    dispatch(createPostReply(values));
+    handleClose();
     console.log("handle submit", values);
   };
+  
   const formik = useFormik({
     initialValues: {
       content: "",
       image: "",
-      postId: 4,
+      postId: post?.id,
     },
     onSubmit: handleSubmit,
   });
-  const handleSelectImage = (event) => {
+
+  const handleSelectImage = async (event) => {
     setUploadingImage(true);
-    const imgUrl = event.target.files[0];
+    const imgUrl = await uploadToCloudinary(event.target.files[0]);
     formik.setFieldValue("image", imgUrl);
     setSelectedImage(imgUrl);
     setUploadingImage(false);

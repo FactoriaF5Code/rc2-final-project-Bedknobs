@@ -85,8 +85,7 @@ public class PostServiceImplementation implements PostService {
         post.setReplyFor(replyFor);
 
         Post savedReply = postRepository.save(post);
-
-        post.getReplyPosts().add(savedReply);
+        replyFor.getReplyPosts().add(savedReply);
         postRepository.save(replyFor);
 
         return replyFor;

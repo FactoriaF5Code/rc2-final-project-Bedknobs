@@ -9,14 +9,18 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useState } from "react";
 import ReplyModal from "../ReplyModal/ReplyModal";
 import React from "react";
+import { useDispatch } from "react-redux";
+import { createRePost, likePost } from "../../store/Post/Action";
 
-function Post() {
+function Post({ post }) {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [openReplyModal, setOpenReplyModal] = useState(false);
   const handleOpenReplyModel = () => setOpenReplyModal(true);
   const handleCloseReplyModal = () => setOpenReplyModal(false);
+  const dispatch = useDispatch();
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -28,24 +32,28 @@ function Post() {
     handleClose();
   };
   const handleCreateRepost = () => {
+    dispatch(createRePost(post?.id));
     console.log("repost done");
   };
   const handleLikePost = () => {
+    dispatch(likePost(post?.id));
     console.log("handle like work");
   };
   return (
     <React.Fragment>
       <div className="postUserContainer">
         <Avatar
-          onClick={() => navigate(`/account/${6}`)}
+          onClick={() => navigate(`/account/${post?.user.id}`)}
           alt="username"
           src="https://cdn.pixabay.com/photo/2023/09/22/17/59/dog-8269584_640.jpg"
         />
         <div>
           <div className="postUser">
             <section className="postUsername">
-              <span>Rosie Queen</span>
-              <span className="opacity-50">@Queenie . 2m</span>
+              <span>{post?.user?.fullName}</span>
+              <span className="opacity-50">
+                @{post?.user?.fullName.split(" ").join("_").toLowerCase()} . 2m
+              </span>
             </section>
             <section>
               <Button
@@ -71,40 +79,52 @@ function Post() {
               </Menu>
             </section>
           </div>
+
           <div className="postInfoContainer">
             <section
-              onClick={() => navigate(`/post/${2}`)}
+              onClick={() => navigate(`/post/${post?.id}`)}
               className="postInfo"
             >
-              <p>Día de playa</p>
-              <img
-                src="../../../src/images/Nala.jpg"
-                alt="nice view"
-              />
+              <p>{post?.content}</p>
+              {post?.image && (
+              <img src={post?.image} alt="" />
+              )}
             </section>
             <section className="postOptions">
-              <div>
+              <div
+                className={`${post?.reply ? "text-teal-500" : "text-gray-600"}`}
+              >
                 <ChatBubbleOutlineIcon onClick={handleOpenReplyModel} />
-                <p>43</p>
+                <p>{post?.totalReplies}</p>
               </div>
-              <div className={`${true ? "text-teal-500" : "text-gray-600"}`}>
+              <div
+                className={`${
+                  post?.repost ? "text-teal-500" : "text-gray-600"
+                }`}
+              >
                 <RepeatIcon onClick={handleCreateRepost} />
-                <p>54</p>
+                <p>{post?.totalReposts}</p>
               </div>
-              <div className={`${true ? "text-teal-500" : "text-gray-600"}`}>
-                {true ? (
+              <div
+                className={`${post?.liked ? "text-teal-500" : "text-gray-600"}`}
+              >
+                {post?.liked ? (
                   <FavoriteIcon onClick={handleLikePost} />
                 ) : (
                   <FavoriteBorderIcon onClick={handleLikePost} />
                 )}
-                <p>67</p>
+                <p>{post?.totalLikes}</p>
               </div>
             </section>
           </div>
         </div>
       </div>
       <section>
-        <ReplyModal handleClose={handleCloseReplyModal} open={openReplyModal}/>
+        <ReplyModal
+          post={post}
+          handleClose={handleCloseReplyModal}
+          open={openReplyModal}
+        />
       </section>
     </React.Fragment>
   );

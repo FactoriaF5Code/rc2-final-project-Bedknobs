@@ -5,30 +5,47 @@ import * as Yup from "yup";
 import ImageIcon from "@mui/icons-material/Image";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Post from "../Post/Post";
+import { useDispatch, useSelector } from "react-redux";
+import { createPost, getAllPosts } from "../../store/Post/Action";
+import { uploadToCloudinary } from "../../utils/uploadToCloudinary";
 
 function Entries() {
   const [uploadingImage, setUploadingImage] = useState();
   const [selectedImage, setSelectedImage] = useState("");
+  const dispatch = useDispatch();
+  const { post } = useSelector((store) => store);
+  console.log("post ", post);
+
   const validationSchema = Yup.object().shape({
     content: Yup.string().required("Es necesario un mensaje"),
   });
-  const handleSubmit = (values) => {
+
+  const handleSubmit = (values, actions) => {
+    dispatch(createPost(values));
+    actions.resetForm();
     console.log("values", values);
+    setSelectedImage("");
   };
+
+  useEffect(() => {
+    dispatch(getAllPosts());
+  }, [post.like, post.repost]);
+
   const formik = useFormik({
     initialValues: {
       content: "",
       image: "",
+      isPost: true,
     },
     onSubmit: handleSubmit,
     validationSchema,
   });
 
-  const handleSelectImage = (event) => {
+  const handleSelectImage = async (event) => {
     setUploadingImage(true);
-    const imgUrl = event.target.files[0];
+    const imgUrl = await uploadToCloudinary(event.target.files[0]);
     formik.setFieldValue("image", imgUrl);
     setSelectedImage(imgUrl);
     setUploadingImage(false);
@@ -74,18 +91,19 @@ function Entries() {
                 </div>
               </div>
             </form>
+            <div>{selectedImage && <img src={selectedImage} alt="" />}</div>
           </div>
         </section>
         <section>
-          {[1, 2, 3, 4, 5].map(( index) => (
-            <div key={index}>
-              <Post />
-              {index !==[1, 2, 3, 4, 5].length -1 && 
-              <div className="divider">
-                <Divider />
-                </div> }
-            </div>
-          ))}
+          {Array.isArray(post.posts) &&
+            post.posts.map((post, index) => (
+              <div key={index}>
+                <Post post={post} />
+                <div className="divider">
+                  <Divider />
+                </div>
+              </div>
+            ))}
         </section>
       </div>
     </main>
