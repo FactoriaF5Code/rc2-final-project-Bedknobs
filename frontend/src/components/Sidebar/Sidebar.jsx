@@ -13,6 +13,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/Auth/action";
 
 function Sidebar() {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const { auth } = useSelector((store) => store);
   const navigation = [
     {
       title: "Inicio",
@@ -27,12 +29,9 @@ function Sidebar() {
     {
       title: "Perfil",
       icon: <AccountIcon />,
-      path: "/account/4",
+      path: `/account/${auth.user?.id}`,
     },
   ];
-
-  const [anchorEl, setAnchorEl] = useState(null);
-  const { auth } = useSelector((store) => store);
   const dispatch = useDispatch();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {

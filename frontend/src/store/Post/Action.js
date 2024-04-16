@@ -37,10 +37,11 @@ export const getUsersPost = (userId) => async (dispatch) => {
     console.log("get user posts : ", data);
     dispatch({ type: GET_USERS_POST_SUCCESS, payload: data });
   } catch (error) {
-    console.log("catch error get  UsersPost- ", error);
+    console.log("catch error get UsersPost- ", error);
     dispatch({ type: GET_USERS_POST_FAILURE, payload: error.message });
   }
 };
+
 
 export const findPostsByLikeContainsUser = (userId) => async (dispatch) => {
   try {

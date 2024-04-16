@@ -93,7 +93,7 @@ function Entries() {
         </section>
         <section>
           {Array.isArray(post.posts) &&
-            post.posts.map((post, index) => (
+            post.posts?.map((post, index) => (
               <div key={index}>
                 <Post post={post} />
                 <div className="divider">

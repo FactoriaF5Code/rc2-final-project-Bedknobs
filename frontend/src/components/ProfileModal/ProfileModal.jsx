@@ -31,12 +31,14 @@ function ProfileModal({ handleOpen, handleClose }) {
   const [uploading, setUploading] = useState(false);
   const dispatch = useDispatch();
   const [setSelectedImage, setImage] = useState("");
-    const { auth } = useSelector((store) => store);
+  const [setSelectedBackgrounImage, selectedBackgrounImage] = useState("");
+  const { auth } = useSelector((store) => store);
 
   const handleSubmit = (values) => {
     dispatch(updateUserProfile(values));
     console.log("handle submit", values);
     setSelectedImage("");
+    setSelectedBackgrounImage("");
   };
 
   const handleImageChange = async (event) => {
@@ -45,6 +47,15 @@ function ProfileModal({ handleOpen, handleClose }) {
     const file = await uploadToCloudinary(event.target.files[0]);
     formik.setFieldValue(name, file);
     setImage(file);
+    setUploading(false);
+  };
+
+  const handleBackgroundImageChange = async (event) => {
+    setUploading(true);
+    const { name } = event.target;
+    const file = await uploadToCloudinary(event.target.files[0]);
+    formik.setFieldValue(name, file);
+    selectedBackgrounImage(file);
     setUploading(false);
   };
 
@@ -85,14 +96,18 @@ function ProfileModal({ handleOpen, handleClose }) {
                   <div>
                     <img
                       className="modalCoverImg"
-                      src="https://cdn.pixabay.com/photo/2023/10/23/17/10/landscape-8336497_960_720.jpg"
+                      src={
+                        setSelectedImage ||
+                        auth.user?.backgroundImage ||
+                        "https://pixabay.com/es/photos/bulldog-franc%C3%A9s-perro-blanco-y-negro-5219522/"
+                      }
                       alt="Portada"
                     />
                     <input
                       className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
                       type="file"
                       name="backgroundImage"
-                      onChange={handleImageChange}
+                      onChange={handleBackgroundImageChange}
                     />
                   </div>
                   <div className="modalProfileImg">

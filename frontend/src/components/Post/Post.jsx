@@ -45,7 +45,7 @@ function Post({ post }) {
         <Avatar
           onClick={() => navigate(`/account/${post?.user.id}`)}
           alt="username"
-          src="https://cdn.pixabay.com/photo/2023/09/22/17/59/dog-8269584_640.jpg"
+          src={post?.user?.image}
         />
         <div>
           <div className="postUser">

@@ -123,7 +123,7 @@ public class PostController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<PostDto>> getUsersAllPosts(@PathVariable Long postId,
+    public ResponseEntity<List<PostDto>> getUsersAllPosts(@PathVariable Long userId,
             @RequestHeader("Authorization") String jwt) throws UserException, PostException {
 
         UserDoggie user = userService.findUserProfileByJwt(jwt);

@@ -5,19 +5,28 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import "./Profile.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Post from "../../components/Post/Post";
 import ProfileModal from "../../components/ProfileModal/ProfileModal";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import { findUserById, followUserAction } from "../../store/Auth/action";
+import { useParams } from "react-router-dom";
+import { getUsersPost } from "../../store/Post/Action";
 
 function Profile() {
   const [tabValue, setTabValue] = useState("1");
   const [openProfileModal, setOpenProfileModal] = useState(false);
-  const { auth } = useSelector((store) => store);
+  const { auth, post } = useSelector((store) => store);
+  const dispatch = useDispatch();
+  const { id } = useParams();
 
   const handleOpenProfileModel = () => setOpenProfileModal(true);
+
   const handleClose = () => setOpenProfileModal(false);
+
   const handleFollowUser = () => {
+    dispatch(followUserAction(id));
     console.log("Follow user");
   };
 
@@ -30,41 +39,58 @@ function Profile() {
     }
   };
 
+  useEffect(() => {
+    dispatch(findUserById(id));
+    dispatch(getUsersPost(id));
+  }, [id]);
+
   return (
     <main className="bodyContainer">
       <div className="entriesContainer">
         <section className="profileCover">
+          {auth.findUser?.backgroundImage ? 
           <img
-            src="https://cdn.pixabay.com/photo/2023/10/23/17/10/landscape-8336497_960_720.jpg"
+            src={auth.findUser?.backgroundImage}
+            alt="Fondo"
+          /> :
+          <img
+            src="../../../src/images/bgPhoto.jpg"
             alt="Fondo"
           />
+        }
           <div className="profileAvatar">
-            <Avatar alt="Queniee" src={auth.user?.image} />
+            <Avatar alt="Queniee" src={auth.findUser?.image} />
           </div>
         </section>
         <section>
           <div className="profileInfo">
             <div className="profileUser">
-              <h2>{auth.user?.fullName}</h2>
+              <h2>{auth.findUser?.fullName}</h2>
               <p className="opacity-50">
-                @{auth.user?.fullName.split(" ").join("_").toLowerCase()}
+                @{auth.findUser?.fullName.split(" ").join("_").toLowerCase()}
               </p>
               <div className="followersAndFollows">
                 <p>
-                  190 <span className="opacity-50">Seguidores</span>
+                  {auth.findUser?.followers?.length}{" "}
+                  <span className="opacity-50">Seguidores</span>
                 </p>
                 <p>
-                  590<span className="opacity-50"> Seguidos</span>
+                  {auth.findUser?.following?.length}
+                  <span className="opacity-50"> Seguidos</span>
                 </p>
               </div>
-              <p>{auth.user?.bio}</p>
+              <p className="profileBio">{auth.findUser?.bio}</p>
+              <div className="calendarInfo">
+                <CalendarMonthIcon className="text-teal-500" />
+                <p></p>
+              </div>
             </div>
             <div className="entrieBtn">
-              {true ? (
+              {auth.findUser?.req_user  ? (
                 <Button onClick={handleOpenProfileModel}>EDITAR PERFIL</Button>
               ) : (
                 <Button onClick={handleFollowUser}>
-                  {true ? "SEGUIR" : "DEJAR DE SEGUIR"}
+                  {auth.findUser?.followed ? "DEJAR DE SEGUIR" : "SEGUIR"}
                 </Button>
               )}
             </div>
@@ -86,15 +112,14 @@ function Profile() {
                 </TabList>
               </Box>
               <TabPanel value="1">
-                {Array.isArray(auth.posts) &&
-                  auth.posts.map((post, index) => (
-                    <div key={index}>
-                      <Post post={post} />
-                      <div className="divider">
-                        <Divider />
-                      </div>
+                {auth.findUser?.req_user && post.posts?.map((post, index) => (
+                  <div key={index}>
+                    <Post post={post} />
+                    <div className="divider">
+                      <Divider />
                     </div>
-                  ))}
+                  </div>
+                ))}
               </TabPanel>
               <TabPanel value="2">Comentarios</TabPanel>
               <TabPanel value="3">Media</TabPanel>

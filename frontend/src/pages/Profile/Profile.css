@@ -10,7 +10,8 @@
   border-radius: 8px;
 }
 
-.profileAvatar .css-1wlk0hk-MuiAvatar-root {
+.profileAvatar .css-1wlk0hk-MuiAvatar-root,
+.profileAvatar .css-17o22dy-MuiAvatar-root {
   border-radius: 8px;
   cursor: pointer;
   width: 6vw;
@@ -21,25 +22,31 @@
 }
 
 .profileInfo {
-    width: 52vw;
-    margin-top: 4.5vh;
-    padding-left: 1.5vw;
-    display: flex;
-    justify-content: space-between;
+  width: 52vw;
+  margin-top: 4.5vh;
+  padding-left: 1.5vw;
+  display: flex;
+  justify-content: space-between;
 }
 
 .profileUser h2 {
-    font-size: larger;
+  font-size: larger;
 }
 
 .profileUser p {
-    font-size: 0.9rem;
+  font-size: 0.9rem;
 }
 
 .followersAndFollows {
-    margin-top: 0.3vh;
-    display: flex;
-    gap: 0.5vw;
+  margin-top: 0.3vh;
+  display: flex;
+  gap: 0.5vw;
+}
+
+.profileBio {
+  margin: 0.5vh auto;
+  font-weight: 300;
+  width: 40vw;
 }
 
 .userTable {
