@@ -45,6 +45,8 @@ function Sidebar() {
     console.log("Logout");
     handleClose();
     dispatch(logout());
+    window.location.reload();
+    window.location.href = '/';
   };
 
   return (

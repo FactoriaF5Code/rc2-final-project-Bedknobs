@@ -11,10 +11,20 @@ function App() {
   const { auth } = useSelector((store) => store);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
   useEffect(() => {
     if (jwt) {
       dispatch(getUserProfile(jwt));
-      navigate("/");
+      // Si es la primera vez que se inicia sesión después de cerrarla, recargar la página
+      if (!localStorage.getItem("firstLogin")) {
+        localStorage.setItem("firstLogin", "true");
+        window.location.reload();
+      } else {
+        navigate("/");
+      }
+    } else {
+      // Limpiar el indicador de primera sesión al cerrar sesión
+      localStorage.removeItem("firstLogin");
     }
   }, [auth.jwt]);
 
