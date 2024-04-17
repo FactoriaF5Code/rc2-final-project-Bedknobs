@@ -11,6 +11,7 @@ import NavigationItem from "./NavigationItem";
 import ProfileMenu from "./ProfileMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/Auth/action";
+import { Link } from "react-router-dom";
 
 function Sidebar() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -46,7 +47,7 @@ function Sidebar() {
     handleClose();
     dispatch(logout());
     window.location.reload();
-    window.location.href = '/';
+    window.location.href = "/";
   };
 
   return (
@@ -68,13 +69,12 @@ function Sidebar() {
             <SearchIcon />
           </span>
         </div>
-        <Button>PUBLICAR</Button>
+        <Link to="/">
+          <Button>PUBLICAR</Button>
+        </Link>
       </section>
       <section className="profileInfoContainer">
-        <Avatar
-          alt="Avatar"
-          src={auth.user?.image}
-        />
+        <Avatar alt="Avatar" src={auth.user?.image} />
         <div className="profileInfoSidebar">
           <span>{auth.user?.fullName}</span>
           <span className="opacity-50">
