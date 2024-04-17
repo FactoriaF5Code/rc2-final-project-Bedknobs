@@ -12,6 +12,7 @@ import { createPost, getAllPosts } from "../../store/Post/Action";
 import { uploadToCloudinary } from "../../utils/uploadToCloudinary";
 
 function Entries() {
+  // eslint-disable-next-line no-unused-vars
   const [uploadingImage, setUploadingImage] = useState();
   const [selectedImage, setSelectedImage] = useState("");
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ function Entries() {
 
   useEffect(() => {
     dispatch(getAllPosts());
-  }, [post.like, post.repost]);
+  }, [dispatch, post.like, post.repost]);
 
   const formik = useFormik({
     initialValues: {

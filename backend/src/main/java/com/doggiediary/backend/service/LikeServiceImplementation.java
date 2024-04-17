@@ -53,6 +53,7 @@ public class LikeServiceImplementation implements LikeService {
     @Override
     public List<Like> getAllLikes(Long postId) throws PostException {
 
+        @SuppressWarnings("unused")
         Post post = postService.findById(postId);
 
         List<Like> likes = likeRepository.findByPostId(postId);

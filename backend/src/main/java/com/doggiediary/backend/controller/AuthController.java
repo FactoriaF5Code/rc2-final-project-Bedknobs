@@ -41,11 +41,12 @@ public ResponseEntity<AuthResponse> createUserHandler(@RequestBody UserDoggie us
         throw new UserException("Email is already used with another account");
     }
 
-    user.setFullName(user.getFullName()); // Use the fullName field directly
+    user.setFullName(user.getFullName());
 
     String encodedPassword = passwordEncoder.encode(user.getPassword());
     user.setPassword(encodedPassword);
 
+    @SuppressWarnings("unused")
     UserDoggie savedUser = userRepository.save(user);
 
     String token = jwtProvider.generateToken(email);
@@ -55,7 +56,6 @@ public ResponseEntity<AuthResponse> createUserHandler(@RequestBody UserDoggie us
 
     @PostMapping("/signin")
     public ResponseEntity<AuthResponse> signin(@RequestBody UserDoggie user) {
-        // Verificar la autenticación y generar el token JWT
         String email = user.getEmail();
         UserDoggie foundUser = userRepository.findByEmail(email);
         if (foundUser == null) {
@@ -69,6 +69,7 @@ public ResponseEntity<AuthResponse> createUserHandler(@RequestBody UserDoggie us
         return new ResponseEntity<>(res, HttpStatus.ACCEPTED);
     }
 
+    @SuppressWarnings("unused")
     private Authentication authenticate(String username, String password) {
 
         UserDetails userDetails = customeUserDetails.loadUserByUsername(username);

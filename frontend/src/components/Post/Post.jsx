@@ -11,6 +11,7 @@ import ReplyModal from "../ReplyModal/ReplyModal";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { createRePost, likePost } from "../../store/Post/Action";
+import PropTypes from "prop-types";
 
 function Post({ post }) {
   const navigate = useNavigate();
@@ -86,9 +87,7 @@ function Post({ post }) {
               className="postInfo"
             >
               <p>{post?.content}</p>
-              {post?.image && (
-              <img src={post?.image} alt="" />
-              )}
+              {post?.image && <img src={post?.image} alt="" />}
             </section>
             <section className="postOptions">
               <div
@@ -129,5 +128,24 @@ function Post({ post }) {
     </React.Fragment>
   );
 }
+
+Post.propTypes = {
+  post: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    user: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      fullName: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+    }).isRequired,
+    content: PropTypes.string.isRequired,
+    image: PropTypes.string,
+    reply: PropTypes.bool.isRequired,
+    totalReplies: PropTypes.number.isRequired,
+    repost: PropTypes.bool.isRequired,
+    totalReposts: PropTypes.number.isRequired,
+    liked: PropTypes.bool.isRequired,
+    totalLikes: PropTypes.number.isRequired,
+  }).isRequired,
+};
 
 export default Post;

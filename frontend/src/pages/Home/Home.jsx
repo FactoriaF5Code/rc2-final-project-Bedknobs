@@ -10,7 +10,6 @@ function Home() {
     <div className="bgHome relative">
       <Grid container item className="justify-between">
         <Sidebar />
-
         <div className="rightPartHome">
           <Routes>
             <Route path="/" element={<Entries />} />

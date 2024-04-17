@@ -42,7 +42,6 @@ export const getUsersPost = (userId) => async (dispatch) => {
   }
 };
 
-
 export const findPostsByLikeContainsUser = (userId) => async (dispatch) => {
   try {
     const { data } = await api.get(`/api/posts/user/${userId}/likes`);

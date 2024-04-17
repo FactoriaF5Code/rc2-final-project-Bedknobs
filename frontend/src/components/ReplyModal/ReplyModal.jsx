@@ -12,6 +12,7 @@ import "./ReplyModal.css";
 import { useDispatch } from "react-redux";
 import { createPostReply } from "../../store/Post/Action";
 import { uploadToCloudinary } from "../../utils/uploadToCloudinary";
+import PropTypes from "prop-types";
 
 const style = {
   position: "absolute",
@@ -27,7 +28,9 @@ const style = {
 };
 
 function ReplyModal({ handleClose, open, post }) {
+  // eslint-disable-next-line no-unused-vars
   const [uploadingImage, setUploadingImage] = useState();
+  // eslint-disable-next-line no-unused-vars
   const [selectedImage, setSelectedImage] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -37,7 +40,7 @@ function ReplyModal({ handleClose, open, post }) {
     handleClose();
     console.log("handle submit", values);
   };
-  
+
   const formik = useFormik({
     initialValues: {
       content: "",
@@ -135,5 +138,11 @@ function ReplyModal({ handleClose, open, post }) {
     </div>
   );
 }
+
+ReplyModal.propTypes = {
+  handleClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+  post: PropTypes.object.isRequired,
+};
 
 export default ReplyModal;

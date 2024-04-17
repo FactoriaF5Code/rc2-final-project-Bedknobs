@@ -42,7 +42,7 @@ function Profile() {
   useEffect(() => {
     dispatch(findUserById(id));
     dispatch(getUsersPost(id));
-  }, [id]);
+  }, [dispatch, id]);
 
   return (
     <main className="bodyContainer">

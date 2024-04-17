@@ -11,11 +11,10 @@ function App() {
   const { auth } = useSelector((store) => store);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     if (jwt) {
       dispatch(getUserProfile(jwt));
-      // Si es la primera vez que se inicia sesión después de cerrarla, recargar la página
       if (!localStorage.getItem("firstLogin")) {
         localStorage.setItem("firstLogin", "true");
         window.location.reload();
@@ -23,9 +22,9 @@ function App() {
         navigate("/");
       }
     } else {
-      // Limpiar el indicador de primera sesión al cerrar sesión
       localStorage.removeItem("firstLogin");
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth.jwt]);
 
   return (

@@ -18,7 +18,7 @@ function PostDetail() {
     if (id) {
       dispatch(findPostsById(id));
     }
-  }, []);
+  }, [dispatch, id]);
 
   return (
     <React.Fragment>

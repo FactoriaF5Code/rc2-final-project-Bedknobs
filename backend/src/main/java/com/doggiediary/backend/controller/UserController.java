@@ -61,6 +61,7 @@ public class UserController {
             @RequestHeader("Authorization") String jwt)
             throws UserException {
 
+        @SuppressWarnings("unused")
         UserDoggie reqUser = userService.findUserProfileByJwt(jwt);
         List<UserDoggie> users = userService.searchUser(query);
         List<UserDto> userDtos = UserDtoMapper.toUserDtos(users);

@@ -4,6 +4,7 @@ import Modal from "@mui/material/Modal";
 import SigninForm from "./SigninForm";
 import SignupForm from "./SignupForm";
 import { Button } from "@mui/base";
+import PropTypes from "prop-types";
 
 const style = {
   position: "absolute",
@@ -65,3 +66,8 @@ export default function AuthModal({ open, handleClose }) {
     </div>
   );
 }
+
+AuthModal.propTypes = {
+  open: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
+};

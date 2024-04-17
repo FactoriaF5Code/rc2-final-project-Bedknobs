@@ -10,6 +10,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUserProfile } from "../../store/Auth/action";
 import { uploadToCloudinary } from "../../utils/uploadToCloudinary";
+import PropTypes from "prop-types";
 
 const style = {
   position: "absolute",
@@ -28,6 +29,7 @@ const style = {
 };
 
 function ProfileModal({ handleOpen, handleClose }) {
+  // eslint-disable-next-line no-unused-vars
   const [uploading, setUploading] = useState(false);
   const dispatch = useDispatch();
   const [setSelectedImage, setImage] = useState("");
@@ -168,5 +170,10 @@ function ProfileModal({ handleOpen, handleClose }) {
     </div>
   );
 }
+
+ProfileModal.propTypes = {
+  handleOpen: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
+};
 
 export default ProfileModal;

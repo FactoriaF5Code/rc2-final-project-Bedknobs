@@ -14,6 +14,7 @@ public class LikeDtoMapper {
     public static LikeDto toLikeDto(Like like, UserDoggie reqUser) {
 
         UserDto user = UserDtoMapper.toUserDto(like.getUser());
+        @SuppressWarnings("unused")
         UserDto reqUserDto = UserDtoMapper.toUserDto(reqUser);
         PostDto post = PostDtoMapper.toPostDto(like.getPost(), reqUser);
 
