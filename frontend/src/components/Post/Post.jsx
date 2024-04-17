@@ -9,7 +9,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useState } from "react";
 import ReplyModal from "../ReplyModal/ReplyModal";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { createRePost, deletePost, likePost } from "../../store/Post/Action";
 import PropTypes from "prop-types";
 

@@ -73,12 +73,12 @@ function ReplyModal({ handleClose, open, post }) {
               <Avatar
                 onClick={() => navigate(`/account/${6}`)}
                 alt="username"
-                src={post.user?.image}
+                src={post?.user?.image}
               />
               <div>
                 <div className="postUser">
                   <section className="postUsername">
-                    <span>{post.user?.fullName}</span>
+                    <span>{post?.user?.fullName}</span>
                     <span className="opacity-50">@{post?.user?.fullName.split(" ").join("_").toLowerCase()} . 2m</span>
                   </section>
                 </div>
@@ -87,7 +87,7 @@ function ReplyModal({ handleClose, open, post }) {
                     onClick={() => navigate(`/post/${2}`)}
                     className="postInfo"
                   >
-                    <p>{post.content}</p>
+                    <p>{post?.content}</p>
                   </section>
                 </div>
               </div>
