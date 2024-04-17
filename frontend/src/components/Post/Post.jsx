@@ -21,7 +21,6 @@ function Post({ post }) {
   const handleOpenReplyModel = () => setOpenReplyModal(true);
   const handleCloseReplyModal = () => setOpenReplyModal(false);
   const dispatch = useDispatch();
-  const userAuthenticatedId = useSelector((state) => state.auth.userId);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -29,14 +28,11 @@ function Post({ post }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   const handleDeletePost = () => {
-    if (post.user.id === userAuthenticatedId) {
-      console.log("delete post");
-      handleClose();
-      dispatch(deletePost(post.id));
-    } else {
-      console.log("No tienes permiso para borrar este post");
-    }
+    console.log("delete post");
+    handleClose();
+    dispatch(deletePost(post.id));
   };
   const handleCreateRepost = () => {
     dispatch(createRePost(post?.id));
@@ -82,7 +78,6 @@ function Post({ post }) {
                 }}
               >
                 <MenuItem onClick={handleDeletePost}>Borrar</MenuItem>
-                <MenuItem onClick={handleDeletePost}>Editar</MenuItem>
               </Menu>
             </section>
           </div>
