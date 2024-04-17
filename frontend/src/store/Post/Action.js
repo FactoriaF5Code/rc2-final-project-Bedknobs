@@ -110,7 +110,7 @@ export const likePost = (postId) => async (dispatch) => {
 
 export const deletePost = (postId) => async (dispatch) => {
   try {
-    const { data } = await api.post(`/api/post/${postId}`);
+    const { data } = await api.delete(`/api/posts/${postId}`);
     console.log("Deleted post: ", data);
     dispatch({ type: POST_DELETE_SUCCESS, payload: postId });
   } catch (error) {

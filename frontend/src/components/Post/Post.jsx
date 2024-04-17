@@ -9,8 +9,8 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useState } from "react";
 import ReplyModal from "../ReplyModal/ReplyModal";
 import React from "react";
-import { useDispatch } from "react-redux";
-import { createRePost, likePost } from "../../store/Post/Action";
+import { useDispatch, useSelector } from "react-redux";
+import { createRePost, deletePost, likePost } from "../../store/Post/Action";
 import PropTypes from "prop-types";
 
 function Post({ post }) {
@@ -21,6 +21,7 @@ function Post({ post }) {
   const handleOpenReplyModel = () => setOpenReplyModal(true);
   const handleCloseReplyModal = () => setOpenReplyModal(false);
   const dispatch = useDispatch();
+  const userAuthenticatedId = useSelector((state) => state.auth.userId);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -29,8 +30,13 @@ function Post({ post }) {
     setAnchorEl(null);
   };
   const handleDeletePost = () => {
-    console.log("delete post");
-    handleClose();
+    if (post.user.id === userAuthenticatedId) {
+      console.log("delete post");
+      handleClose();
+      dispatch(deletePost(post.id));
+    } else {
+      console.log("No tienes permiso para borrar este post");
+    }
   };
   const handleCreateRepost = () => {
     dispatch(createRePost(post?.id));

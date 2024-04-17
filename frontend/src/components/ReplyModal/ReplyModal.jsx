@@ -9,7 +9,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import { useFormik } from "formik";
 import "./ReplyModal.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createPostReply } from "../../store/Post/Action";
 import { uploadToCloudinary } from "../../utils/uploadToCloudinary";
 import PropTypes from "prop-types";
@@ -34,6 +34,8 @@ function ReplyModal({ handleClose, open, post }) {
   const [selectedImage, setSelectedImage] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { auth } = useSelector((store) => store);
+
 
   const handleSubmit = (values) => {
     dispatch(createPostReply(values));
@@ -71,13 +73,13 @@ function ReplyModal({ handleClose, open, post }) {
               <Avatar
                 onClick={() => navigate(`/account/${6}`)}
                 alt="username"
-                src="https://cdn.pixabay.com/photo/2023/09/22/17/59/dog-8269584_640.jpg"
+                src={post.user?.image}
               />
               <div>
                 <div className="postUser">
                   <section className="postUsername">
-                    <span>Rosie Queen</span>
-                    <span className="opacity-50">@Queenie . 2m</span>
+                    <span>{post.user?.fullName}</span>
+                    <span className="opacity-50">@{post?.user?.fullName.split(" ").join("_").toLowerCase()} . 2m</span>
                   </section>
                 </div>
                 <div className="postInfoContainer">
@@ -85,7 +87,7 @@ function ReplyModal({ handleClose, open, post }) {
                     onClick={() => navigate(`/post/${2}`)}
                     className="postInfo"
                   >
-                    <p>Maravillosa vista</p>
+                    <p>{post.content}</p>
                   </section>
                 </div>
               </div>
@@ -93,7 +95,7 @@ function ReplyModal({ handleClose, open, post }) {
             <section className="newEntrieContainer">
               <Avatar
                 alt="username"
-                src="https://cdn.pixabay.com/photo/2023/09/22/17/59/dog-8269584_640.jpg"
+                src={auth.user?.image}
               />
               <div>
                 <form onSubmit={formik.handleSubmit}>
