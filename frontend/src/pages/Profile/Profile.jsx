@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import Post from "../../components/Post/Post";
 import ProfileModal from "../../components/ProfileModal/ProfileModal";
 import { useDispatch, useSelector } from "react-redux";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { findUserById, followUserAction } from "../../store/Auth/action";
 import { useParams } from "react-router-dom";
 import { getUsersPost } from "../../store/Post/Action";
@@ -80,10 +79,6 @@ function Profile() {
                 </p>
               </div>
               <p className="profileBio">{auth.findUser?.bio}</p>
-              <div className="calendarInfo">
-                <CalendarMonthIcon className="text-teal-500" />
-                <p></p>
-              </div>
             </div>
             <div className="entrieBtn">
               {auth.findUser?.req_user  ? (
