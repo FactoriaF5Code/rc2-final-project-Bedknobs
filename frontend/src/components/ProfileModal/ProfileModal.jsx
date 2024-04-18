@@ -101,7 +101,7 @@ function ProfileModal({ handleOpen, handleClose }) {
                       src={
                         setSelectedImage ||
                         auth.user?.backgroundImage ||
-                        "https://pixabay.com/es/photos/bulldog-franc%C3%A9s-perro-blanco-y-negro-5219522/"
+                        "../../../src/images/bgPhoto.jpg"
                       }
                       alt="Portada"
                     />
@@ -116,8 +116,7 @@ function ProfileModal({ handleOpen, handleClose }) {
                     <Avatar
                       src={
                         setSelectedImage ||
-                        auth.user?.image ||
-                        "https://pixabay.com/es/photos/bulldog-franc%C3%A9s-perro-blanco-y-negro-5219522/"
+                        auth.user?.image 
                       }
                     />
                     <input
