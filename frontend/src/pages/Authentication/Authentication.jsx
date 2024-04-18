@@ -7,7 +7,13 @@ import { useState } from "react";
 
 function Authentication() {
   const [openAuthModel, setOpenAuthModel] = useState(false);
-  const handleOpenAuthModel = () => setOpenAuthModel(true);
+  const [activeForm, setActiveForm] = useState("login");
+
+  const handleOpenAuthModel = (formType) => {
+    setOpenAuthModel(true);
+    setActiveForm(formType);
+  };
+
   const handleCloseAuthModel = () => setOpenAuthModel(false);
 
   return (
@@ -20,15 +26,23 @@ function Authentication() {
           <section className="registerAuth">
             <GoogleLogin width={350} />
             <p>O</p>
-            <Button onClick={handleOpenAuthModel}>CREAR UNA CUENTA</Button>
+            <Button onClick={() => handleOpenAuthModel("signup")}>
+              CREAR UNA CUENTA
+            </Button>
           </section>
           <section className="loginAuth">
             <h3>¿YA TIENES UNA CUENTA?</h3>
-            <Button onClick={handleOpenAuthModel}>INICIAR SESIÓN</Button>
+            <Button onClick={() => handleOpenAuthModel("login")}>
+              INICIAR SESIÓN
+            </Button>
           </section>
         </div>
       </Grid>
-      <AuthModal open={openAuthModel} handleClose={handleCloseAuthModel} />
+      <AuthModal
+        open={openAuthModel}
+        handleClose={handleCloseAuthModel}
+        activeForm={activeForm}
+      />
     </div>
   );
 }

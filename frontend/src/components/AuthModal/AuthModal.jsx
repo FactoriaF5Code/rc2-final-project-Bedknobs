@@ -1,5 +1,4 @@
 import Box from "@mui/material/Box";
-import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "@mui/material/Modal";
 import SigninForm from "./SigninForm";
 import SignupForm from "./SignupForm";
@@ -19,15 +18,7 @@ const style = {
   borderRadius: 1,
 };
 
-export default function AuthModal({ open, handleClose }) {
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const handleNavigate = () => {
-    const path = location.pathname === "/signup" ? "/signin" : "/signup";
-    navigate(path);
-  };
-
+export default function AuthModal({ open, handleClose, activeForm }) {
   return (
     <div>
       <Modal
@@ -38,27 +29,21 @@ export default function AuthModal({ open, handleClose }) {
       >
         <Box sx={style} className="authModalContainer">
           <h2 className="titleAuthModal">
-            {location.pathname === "/signup"
-              ? "CREAR UNA CUENTA"
-              : "INICIAR SESIÓN"}
+            {activeForm === "signup" ? "CREAR UNA CUENTA" : "INICIAR SESIÓN"}
           </h2>
-          {location.pathname === "/signup" ? <SignupForm /> : <SigninForm />}
+          {activeForm === "signup" ? <SignupForm /> : <SigninForm />}
           <h2>
-            {location.pathname === "/signup"
+            {activeForm === "signup"
               ? "¿YA TIENES UNA CUENTA?"
               : "¿NO TIENES UNA CUENTA?"}
           </h2>
           <div
             className={
-              location.pathname === "/signup"
-                ? "signupButtonText"
-                : "signinButtonText"
+              activeForm === "signup" ? "signupButtonText" : "signinButtonText"
             }
           >
-            <Button onClick={handleNavigate}>
-              {location.pathname === "/signup"
-                ? "INICIAR SESIÓN"
-                : "CREAR UNA CUENTA"}
+            <Button onClick={() => handleClose()}>
+              {activeForm === "signup" ? "INICIAR SESIÓN" : "CREAR CUENTA"}
             </Button>
           </div>
         </Box>
@@ -70,4 +55,5 @@ export default function AuthModal({ open, handleClose }) {
 AuthModal.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
+  activeForm: PropTypes.oneOf(["signup", "login"]).isRequired,
 };
